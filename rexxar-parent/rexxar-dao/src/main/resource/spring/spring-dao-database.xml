@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 	xmlns:context="http://www.springframework.org/schema/context" 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	 xmlns:p="http://www.springframework.org/schema/p"     xmlns:tx="http://www.springframework.org/schema/tx"
+	 xsi:schemaLocation="
+	  http://www.springframework.org/schema/beans
+	  http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+	  http://www.springframework.org/schema/tx
+	  http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+	  http://www.springframework.org/schema/context
+	  http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+ 
+ 
+  	 <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> 
+		    <property name="url" value="${db.url}" />
+		    <property name="username" value="${db.username}" />
+		    <property name="password" value="${db.password}" />
+		    <property name="filters"  value="config"/>
+		    <property name="proxyFilters">
+                <list>
+                     <ref bean="stat-filter" />
+                </list>
+            </property>
+		    <property name="initialSize" value="1" />
+		    <property name="maxActive"   value="${db.maxPoolSize}" />
+		    <property name="maxWait"     value="${db.borrowConnectionTimeout}" />
+		    <property name="minIdle"     value="${db.minPoolSize}" />
+		    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+		    <property name="minEvictableIdleTimeMillis" value="300000" />
+		    <property name="validationQuery" value="SELECT 'x'" />
+		    <property name="testWhileIdle" value="true" />
+		    <property name="testOnBorrow" value="false" />
+		    <property name="testOnReturn" value="false" />
+   </bean>  
+   
+    <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+          <property name="slowSqlMillis" value="5000" />
+          <property name="logSlowSql" value="true" />
+          <property name="mergeSql" value="true" />
+    </bean> 
+  
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<bean id="crawlerSqlSessionFactory"    class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"/>
+    </bean>
+    
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.rexxar.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="crawlerSqlSessionFactory"/>
+    </bean>	
+	
+ </beans>

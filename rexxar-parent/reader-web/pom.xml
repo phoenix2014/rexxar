@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>com.rexxar</groupId>
+    <artifactId>rexxar-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <artifactId>reader-web</artifactId>
+  <name>reader-web</name>
+  <url>http://maven.apache.org</url>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jetty.version>9.2.10.v20150310</jetty.version>
+    <finalName>rexxar-reader-web</finalName>
+  </properties>
+  
+  <dependencies>
+  
+	<dependency>
+		<groupId>com.rexxar</groupId>
+		<artifactId>rexxar-common</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>com.rexxar</groupId>
+		<artifactId>rexxar-dao</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+  
+ 	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-server</artifactId>
+		<version>${jetty.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-webapp</artifactId>
+		<version>${jetty.version}</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>apache-jsp</artifactId>
+		<version>${jetty.version}</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-annotations</artifactId>
+		<version>${jetty.version}</version>
+	</dependency>
+	
+	<dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  
+
+  </dependencies>
+  
+  <build>
+	  <resources>
+           <resource>
+             <directory>src/main/resources</directory>
+           </resource>
+      </resources>
+	  <outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
+		<finalName>${finalName}</finalName>
+	  <plugins>
+		    <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<version>2.6</version>
+			   <configuration>
+				<excludes>
+				   <exclude>**/*.properties</exclude>
+			           <exclude>**/*.xml</exclude>
+				</excludes>
+			   </configuration>
+		    </plugin>
+		    <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>2.3.2</version>
+			    <configuration>
+				<source>1.7</source>
+				<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+		    </plugin>
+		    <plugin>
+			 <artifactId>maven-assembly-plugin</artifactId>
+			 <version>2.5.5</version>
+			    <configuration>
+				<descriptors>
+				   <descriptor>src/main/assembly/src.xml</descriptor>
+				</descriptors>
+			    </configuration>
+			   <executions>
+				<execution>
+				  <id>make-assembly</id> <!-- this is used for inheritance merges -->
+				  <phase>package</phase> <!-- bind to the packaging phase -->
+				  <goals>
+				    <goal>single</goal>
+				  </goals>
+				</execution>
+			  </executions>
+		     </plugin>
+	     </plugins>
+	</build>
+  
+</project>

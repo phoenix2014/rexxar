@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scanPeriod="60000" scan="true">
+
+    <property name="LOG_HOME" value="log"/>
+    <property name="LOG_KEEP_TIME" value="30"/>
+    
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level] [%logger{36}:%line] - [%msg]%n</pattern>
+             <charset>UTF-8</charset>  
+        </encoder>
+    </appender>
+    
+    <appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{traceId}] [%thread] [%-5level] [%logger{36}:%line] - [%msg]%n</pattern>
+            <charset>UTF-8</charset>  
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/reader_web.debug.log.%d{yyyy-MM-dd}</FileNamePattern>
+            <MaxHistory>${LOG_KEEP_TIME}</MaxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    
+	<appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{traceId}] [%thread] [%-5level] [%logger{36}:%line] - [%msg]%n</pattern>
+            <charset>UTF-8</charset>  
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/reader_web.info.log.%d{yyyy-MM-dd}</FileNamePattern>
+            <MaxHistory>${LOG_KEEP_TIME}</MaxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    
+    <appender name="WARN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{traceId}] [%thread] [%-5level] [%logger{36}:%line] - [%msg]%n</pattern>
+            <charset>UTF-8</charset>  
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/reader_web.warn.log.%d{yyyy-MM-dd}</FileNamePattern>
+            <MaxHistory>${LOG_KEEP_TIME}</MaxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    
+	<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{traceId}] [%thread] [%-5level] [%logger{36}:%line] - [%msg]%n</pattern>
+            <charset>UTF-8</charset>  
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/reader_web.error.log.%d{yyyy-MM-dd}</FileNamePattern>
+            <MaxHistory>${LOG_KEEP_TIME}</MaxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    	
+	<logger name="com.reaxxar.crawler" additivity="true" level="DEBUG">
+        <appender-ref ref="DEBUG_FILE"/>
+        <appender-ref ref="INFO_FILE"/>
+        <appender-ref ref="WARN_FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    
+    <root level="INFO">
+         <appender-ref ref="STDOUT"/>
+         <appender-ref ref="DEBUG_FILE"/>
+         <appender-ref ref="INFO_FILE"/>
+         <appender-ref ref="WARN_FILE"/>
+         <appender-ref ref="ERROR_FILE"/>
+    </root>
+</configuration>

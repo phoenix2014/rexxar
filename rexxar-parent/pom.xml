@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.rexxar</groupId>
+  <artifactId>rexxar-parent</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>rexxar-parent</name>
+  <url>http://maven.apache.org</url>
+  
+  <modules>
+  	<module>rexxar-common</module>
+  	<module>reader-web</module>
+  	<module>rexxar-dao</module>
+    <module>rexxar-crawler</module>
+  </modules>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <spring.version>4.2.3.RELEASE</spring.version>
+    <logback.version>1.1.3</logback.version>
+    <apache.common.version>3.4</apache.common.version>
+    <fastjson.version>1.2.5</fastjson.version>
+  </properties>
+  
+  <dependencyManagement>
+  </dependencyManagement>
+  
+  <dependencies>
+		
+ 	<dependency>  
+ 		<groupId>ch.qos.logback</groupId>  
+ 		<artifactId>logback-classic</artifactId>  
+ 		<version>${logback.version}</version>  
+	</dependency>  
+	
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+  		<artifactId>commons-lang3</artifactId>
+  		<version>${apache.common.version}</version>
+  	</dependency>
+  	
+  	<dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>18.0</version>
+    </dependency>
+    
+    <dependency>
+	    <groupId>org.apache.httpcomponents</groupId>
+	    <artifactId>httpclient</artifactId>
+	    <version>4.5.2</version>
+	</dependency>
+	
+	<dependency>
+	  <!-- jsoup HTML parser library @ http://jsoup.org/ -->
+	  <groupId>org.jsoup</groupId>
+	  <artifactId>jsoup</artifactId>
+	  <version>1.9.2</version>
+	</dependency>
+    
+    <!-- fastjson -->
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>${fastjson.version}</version>
+    </dependency>
+		
+	<!-- spring -->
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-webmvc</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-tx</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-jdbc</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-test</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+      
+	</dependencies>
+	
+</project>

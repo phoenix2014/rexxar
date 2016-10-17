@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rexxar.dao.CrawlerTaskMapper" >
+  <resultMap id="BaseResultMap" type="com.rexxar.dao.model.CrawlerTask" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="bookname" property="bookname" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="source_url" property="sourceUrl" jdbcType="VARCHAR" />
+    <result column="back_source" property="backSource" jdbcType="VARCHAR" />
+    <result column="latest_chapter" property="latestChapter" jdbcType="SMALLINT" />
+    <result column="latest_chapter_name" property="latestChapterName" jdbcType="VARCHAR" />
+    <result column="crawled_chapter" property="crawledChapter" jdbcType="SMALLINT" />
+    <result column="crawled_chapter_name" property="crawledChapterName" jdbcType="VARCHAR" />
+    <result column="crawled_percent" property="crawledPercent" jdbcType="DECIMAL" />
+    <result column="crawled_status" property="crawledStatus" jdbcType="BIT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, bookname, source, source_url, back_source, latest_chapter, latest_chapter_name, 
+    crawled_chapter, crawled_chapter_name, crawled_percent, crawled_status, update_time, 
+    create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.rexxar.dao.model.CrawlerTaskExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from crawler_task
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from crawler_task
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectIDs" resultType="java.lang.Long" parameterType="com.rexxar.dao.model.CrawlerTaskExample" >
+    select 
+    id
+    from crawler_task
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from crawler_task
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.rexxar.dao.model.CrawlerTaskExample" >
+    delete from crawler_task
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.rexxar.dao.model.CrawlerTask" >
+    insert into crawler_task (id, bookname, source, 
+      source_url, back_source, latest_chapter, 
+      latest_chapter_name, crawled_chapter, crawled_chapter_name, 
+      crawled_percent, crawled_status, update_time, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{bookname,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{sourceUrl,jdbcType=VARCHAR}, #{backSource,jdbcType=VARCHAR}, #{latestChapter,jdbcType=SMALLINT}, 
+      #{latestChapterName,jdbcType=VARCHAR}, #{crawledChapter,jdbcType=SMALLINT}, #{crawledChapterName,jdbcType=VARCHAR}, 
+      #{crawledPercent,jdbcType=DECIMAL}, #{crawledStatus,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rexxar.dao.model.CrawlerTask" >
+    insert into crawler_task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bookname != null" >
+        bookname,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="sourceUrl != null" >
+        source_url,
+      </if>
+      <if test="backSource != null" >
+        back_source,
+      </if>
+      <if test="latestChapter != null" >
+        latest_chapter,
+      </if>
+      <if test="latestChapterName != null" >
+        latest_chapter_name,
+      </if>
+      <if test="crawledChapter != null" >
+        crawled_chapter,
+      </if>
+      <if test="crawledChapterName != null" >
+        crawled_chapter_name,
+      </if>
+      <if test="crawledPercent != null" >
+        crawled_percent,
+      </if>
+      <if test="crawledStatus != null" >
+        crawled_status,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="bookname != null" >
+        #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceUrl != null" >
+        #{sourceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="backSource != null" >
+        #{backSource,jdbcType=VARCHAR},
+      </if>
+      <if test="latestChapter != null" >
+        #{latestChapter,jdbcType=SMALLINT},
+      </if>
+      <if test="latestChapterName != null" >
+        #{latestChapterName,jdbcType=VARCHAR},
+      </if>
+      <if test="crawledChapter != null" >
+        #{crawledChapter,jdbcType=SMALLINT},
+      </if>
+      <if test="crawledChapterName != null" >
+        #{crawledChapterName,jdbcType=VARCHAR},
+      </if>
+      <if test="crawledPercent != null" >
+        #{crawledPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="crawledStatus != null" >
+        #{crawledStatus,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.rexxar.dao.model.CrawlerTaskExample" resultType="java.lang.Integer" >
+    select count(*) from crawler_task
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update crawler_task
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.bookname != null" >
+        bookname = #{record.bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sourceUrl != null" >
+        source_url = #{record.sourceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backSource != null" >
+        back_source = #{record.backSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latestChapter != null" >
+        latest_chapter = #{record.latestChapter,jdbcType=SMALLINT},
+      </if>
+      <if test="record.latestChapterName != null" >
+        latest_chapter_name = #{record.latestChapterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crawledChapter != null" >
+        crawled_chapter = #{record.crawledChapter,jdbcType=SMALLINT},
+      </if>
+      <if test="record.crawledChapterName != null" >
+        crawled_chapter_name = #{record.crawledChapterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crawledPercent != null" >
+        crawled_percent = #{record.crawledPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="record.crawledStatus != null" >
+        crawled_status = #{record.crawledStatus,jdbcType=BIT},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update crawler_task
+    set id = #{record.id,jdbcType=BIGINT},
+      bookname = #{record.bookname,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=VARCHAR},
+      source_url = #{record.sourceUrl,jdbcType=VARCHAR},
+      back_source = #{record.backSource,jdbcType=VARCHAR},
+      latest_chapter = #{record.latestChapter,jdbcType=SMALLINT},
+      latest_chapter_name = #{record.latestChapterName,jdbcType=VARCHAR},
+      crawled_chapter = #{record.crawledChapter,jdbcType=SMALLINT},
+      crawled_chapter_name = #{record.crawledChapterName,jdbcType=VARCHAR},
+      crawled_percent = #{record.crawledPercent,jdbcType=DECIMAL},
+      crawled_status = #{record.crawledStatus,jdbcType=BIT},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rexxar.dao.model.CrawlerTask" >
+    update crawler_task
+    <set >
+      <if test="bookname != null" >
+        bookname = #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceUrl != null" >
+        source_url = #{sourceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="backSource != null" >
+        back_source = #{backSource,jdbcType=VARCHAR},
+      </if>
+      <if test="latestChapter != null" >
+        latest_chapter = #{latestChapter,jdbcType=SMALLINT},
+      </if>
+      <if test="latestChapterName != null" >
+        latest_chapter_name = #{latestChapterName,jdbcType=VARCHAR},
+      </if>
+      <if test="crawledChapter != null" >
+        crawled_chapter = #{crawledChapter,jdbcType=SMALLINT},
+      </if>
+      <if test="crawledChapterName != null" >
+        crawled_chapter_name = #{crawledChapterName,jdbcType=VARCHAR},
+      </if>
+      <if test="crawledPercent != null" >
+        crawled_percent = #{crawledPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="crawledStatus != null" >
+        crawled_status = #{crawledStatus,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rexxar.dao.model.CrawlerTask" >
+    update crawler_task
+    set bookname = #{bookname,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      source_url = #{sourceUrl,jdbcType=VARCHAR},
+      back_source = #{backSource,jdbcType=VARCHAR},
+      latest_chapter = #{latestChapter,jdbcType=SMALLINT},
+      latest_chapter_name = #{latestChapterName,jdbcType=VARCHAR},
+      crawled_chapter = #{crawledChapter,jdbcType=SMALLINT},
+      crawled_chapter_name = #{crawledChapterName,jdbcType=VARCHAR},
+      crawled_percent = #{crawledPercent,jdbcType=DECIMAL},
+      crawled_status = #{crawledStatus,jdbcType=BIT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

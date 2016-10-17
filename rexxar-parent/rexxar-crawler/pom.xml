@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.rexxar</groupId>
+    <artifactId>rexxar-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <artifactId>rexxar-crawler</artifactId>
+  <name>rexxar-crawler</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <dependencies>
+  
+  	<dependency>
+		<groupId>com.rexxar</groupId>
+		<artifactId>rexxar-common</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>com.rexxar</groupId>
+		<artifactId>rexxar-dao</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+  	
+  	<dependency>
+	    <groupId>commons-collections</groupId>
+	    <artifactId>commons-collections</artifactId>
+	    <version>3.2.1</version>
+	</dependency>
+	
+	<dependency>
+        <groupId>org.javatuples</groupId>
+        <artifactId>javatuples</artifactId>
+        <version>1.2</version>
+        <scope>compile</scope>
+    </dependency>
+  
+	<dependency>
+	    <groupId>commons-codec</groupId>
+	    <artifactId>commons-codec</artifactId>
+	    <version>1.10</version>
+	</dependency>
+  
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+  </dependencies>
+  
+  	<build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                            	<transformer  implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">  
+                            		<resource>META-INF/spring.handlers</resource>  
+                            	</transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.rexxar.crawler.boot.CrawlerBooter</mainClass>
+                                </transformer>
+                                <transformer  implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">  
+                            		<resource>META-INF/spring.schemas</resource>
+                            	</transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>    	
+  
+</project>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rexxar.dao.NovelOverviewMapper" >
+  <resultMap id="BaseResultMap" type="com.rexxar.dao.model.NovelOverview" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="bookname" property="bookname" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="novel_describe" property="novelDescribe" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="crawled_chapter" property="crawledChapter" jdbcType="SMALLINT" />
+    <result column="crawled_chapter_name" property="crawledChapterName" jdbcType="VARCHAR" />
+    <result column="novel_status" property="novelStatus" jdbcType="VARCHAR" />
+    <result column="novel_score" property="novelScore" jdbcType="DECIMAL" />
+    <result column="publish_source" property="publishSource" jdbcType="VARCHAR" />
+    <result column="prefer_gender" property="preferGender" jdbcType="BIT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, bookname, author, img_url, novel_describe, category, crawled_chapter, crawled_chapter_name, 
+    novel_status, novel_score, publish_source, prefer_gender, update_time, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.rexxar.dao.model.NovelOverviewExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from novel_overview
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from novel_overview
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from novel_overview
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.rexxar.dao.model.NovelOverviewExample" >
+    delete from novel_overview
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.rexxar.dao.model.NovelOverview" >
+    insert into novel_overview (id, bookname, author, 
+      img_url, novel_describe, category, 
+      crawled_chapter, crawled_chapter_name, novel_status, 
+      novel_score, publish_source, prefer_gender, 
+      update_time, create_time)
+    values (#{id,jdbcType=BIGINT}, #{bookname,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
+      #{imgUrl,jdbcType=VARCHAR}, #{novelDescribe,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
+      #{crawledChapter,jdbcType=SMALLINT}, #{crawledChapterName,jdbcType=VARCHAR}, #{novelStatus,jdbcType=VARCHAR}, 
+      #{novelScore,jdbcType=DECIMAL}, #{publishSource,jdbcType=VARCHAR}, #{preferGender,jdbcType=BIT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rexxar.dao.model.NovelOverview" >
+    insert into novel_overview
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bookname != null" >
+        bookname,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="novelDescribe != null" >
+        novel_describe,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="crawledChapter != null" >
+        crawled_chapter,
+      </if>
+      <if test="crawledChapterName != null" >
+        crawled_chapter_name,
+      </if>
+      <if test="novelStatus != null" >
+        novel_status,
+      </if>
+      <if test="novelScore != null" >
+        novel_score,
+      </if>
+      <if test="publishSource != null" >
+        publish_source,
+      </if>
+      <if test="preferGender != null" >
+        prefer_gender,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="bookname != null" >
+        #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="novelDescribe != null" >
+        #{novelDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="crawledChapter != null" >
+        #{crawledChapter,jdbcType=SMALLINT},
+      </if>
+      <if test="crawledChapterName != null" >
+        #{crawledChapterName,jdbcType=VARCHAR},
+      </if>
+      <if test="novelStatus != null" >
+        #{novelStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="novelScore != null" >
+        #{novelScore,jdbcType=DECIMAL},
+      </if>
+      <if test="publishSource != null" >
+        #{publishSource,jdbcType=VARCHAR},
+      </if>
+      <if test="preferGender != null" >
+        #{preferGender,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.rexxar.dao.model.NovelOverviewExample" resultType="java.lang.Integer" >
+    select count(*) from novel_overview
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update novel_overview
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.bookname != null" >
+        bookname = #{record.bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.author != null" >
+        author = #{record.author,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgUrl != null" >
+        img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.novelDescribe != null" >
+        novel_describe = #{record.novelDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.category != null" >
+        category = #{record.category,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crawledChapter != null" >
+        crawled_chapter = #{record.crawledChapter,jdbcType=SMALLINT},
+      </if>
+      <if test="record.crawledChapterName != null" >
+        crawled_chapter_name = #{record.crawledChapterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.novelStatus != null" >
+        novel_status = #{record.novelStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.novelScore != null" >
+        novel_score = #{record.novelScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.publishSource != null" >
+        publish_source = #{record.publishSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preferGender != null" >
+        prefer_gender = #{record.preferGender,jdbcType=BIT},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update novel_overview
+    set id = #{record.id,jdbcType=BIGINT},
+      bookname = #{record.bookname,jdbcType=VARCHAR},
+      author = #{record.author,jdbcType=VARCHAR},
+      img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      novel_describe = #{record.novelDescribe,jdbcType=VARCHAR},
+      category = #{record.category,jdbcType=VARCHAR},
+      crawled_chapter = #{record.crawledChapter,jdbcType=SMALLINT},
+      crawled_chapter_name = #{record.crawledChapterName,jdbcType=VARCHAR},
+      novel_status = #{record.novelStatus,jdbcType=VARCHAR},
+      novel_score = #{record.novelScore,jdbcType=DECIMAL},
+      publish_source = #{record.publishSource,jdbcType=VARCHAR},
+      prefer_gender = #{record.preferGender,jdbcType=BIT},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rexxar.dao.model.NovelOverview" >
+    update novel_overview
+    <set >
+      <if test="bookname != null" >
+        bookname = #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="novelDescribe != null" >
+        novel_describe = #{novelDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="crawledChapter != null" >
+        crawled_chapter = #{crawledChapter,jdbcType=SMALLINT},
+      </if>
+      <if test="crawledChapterName != null" >
+        crawled_chapter_name = #{crawledChapterName,jdbcType=VARCHAR},
+      </if>
+      <if test="novelStatus != null" >
+        novel_status = #{novelStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="novelScore != null" >
+        novel_score = #{novelScore,jdbcType=DECIMAL},
+      </if>
+      <if test="publishSource != null" >
+        publish_source = #{publishSource,jdbcType=VARCHAR},
+      </if>
+      <if test="preferGender != null" >
+        prefer_gender = #{preferGender,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rexxar.dao.model.NovelOverview" >
+    update novel_overview
+    set bookname = #{bookname,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      novel_describe = #{novelDescribe,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      crawled_chapter = #{crawledChapter,jdbcType=SMALLINT},
+      crawled_chapter_name = #{crawledChapterName,jdbcType=VARCHAR},
+      novel_status = #{novelStatus,jdbcType=VARCHAR},
+      novel_score = #{novelScore,jdbcType=DECIMAL},
+      publish_source = #{publishSource,jdbcType=VARCHAR},
+      prefer_gender = #{preferGender,jdbcType=BIT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

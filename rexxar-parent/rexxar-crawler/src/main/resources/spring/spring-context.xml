@@ -1,0 +1,34 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.1.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-4.1.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+
+	<context:annotation-config />
+	
+	<context:component-scan base-package="com.rexxar.crawler" />
+	
+	<context:property-placeholder  location="classpath*:/config/*app.properties,/config/*db.properties" system-properties-mode="OVERRIDE" file-encoding="UTF-8"/> 
+
+	<util:properties id="app"  location="classpath:/config/app.properties"></util:properties>
+	
+	<task:annotation-driven/>
+	<task:scheduler id="scheduler" pool-size="10"/>
+    
+    <bean id="newNovelCrawler" class="com.rexxar.crawler.NewNovelCrawler"/>
+    <bean id="updateNovelCrawler" class="com.rexxar.crawler.UpdateNovelCrawler"/>
+    <bean id="newNovelScheduler" class="com.rexxar.crawler.scheduler.NewNovelScheduler"/>
+    <bean id="fullNovelScheduler" class="com.rexxar.crawler.scheduler.FullNovelScheduler"/>
+    <bean id="incrementalNovelScheduler" class="com.rexxar.crawler.scheduler.IncrementalNovelScheduler"/>
+     
+</beans>
